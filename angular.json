@@ -6,12 +6,12 @@
     "first-app": {
       "projectType": "application",
       "schematics": {
-        "@schematics/angular:component": {
-          "inlineTemplate": true,
-          "inlineStyle": true,
-          "style": "scss",
-          "skipTests": true
-        },
+				"@schematics/angular:component": {
+					"inlineTemplate": true,
+					"inlineStyle": true,
+					"style": "scss",
+					"skipTests": true
+				},
         "@schematics/angular:class": {
           "skipTests": true
         },
