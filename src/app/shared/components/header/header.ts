@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-header',
   imports: [],
   template: `
-    <header class="flex justify-between items-center p-2 px-5 shadow-mdbg-white z-10">
+    <header class="sticky top-0 flex justify-between items-center p-2 px-5 shadow-sm bg-white z-10">
 			<h1 class="text-3xl">{{ blogTitle }}</h1>
 			<div class="relative">
 				<svg class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
