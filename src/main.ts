@@ -1,16 +1,17 @@
-/*
- *  Protractor support is deprecated in Angular.
- *  Protractor is used in this example for compatibility with Angular documentation tools.
- */
+
 import {bootstrapApplication} from '@angular/platform-browser';
+import { importProvidersFrom } from '@angular/core';
 import {provideRouter} from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app/app';
 import { routes } from './app/app.routes';
 
+// Tornamos HttpClient disponível para serviços injetáveis em componentes standalone
 bootstrapApplication(AppComponent, {
-	providers: [
-		provideRouter(routes),
-	]
+		providers: [
+				provideRouter(routes),
+				importProvidersFrom(HttpClientModule)
+		]
 }).catch((err) =>
-  console.error(err),
+	console.error(err),
 );
