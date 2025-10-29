@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1",
+    "title": "Ascensão dos Aventureiros: Um Olhar Sobre os Jogos Narrativos",
+    "author": "Wendel Henrique",
+    "date": "27 de Outubro, 2025",
+    "readTime": "5 min",
+    "category": "Games",
+    "image": "assets/nova-malpetrim.jpg",
+    "content": "<p>Nos últimos anos, os jogos narrativos ganharam força como um território fértil para experimentação e comunidade. Neste artigo investigamos as razões por trás da ascensão — desde mecânicas que privilegiam a colaboração até comunidades que transformam histórias em movimentos culturais.</p><p>Entrevistamos designers, jogadores e narradores para entender como pequenas mudanças nas regras podem amplificar a experiência dramática. Discutimos estudos de caso e destacamos três práticas que você pode aplicar hoje: foco no jogador, limites criativos e iteração rápida.</p><h3>Conclusão</h3><p>Se você quer criar experiências memoráveis, pense em regras que provoquem histórias, não só respostas.</p>"
+  },
+  {
+    "id": "2",
+    "title": "Feitiços & Ferramentas: Ferramentas Indispensáveis para Narradores",
+    "author": "M. Autora",
+    "date": "10 de Setembro, 2025",
+    "readTime": "8 min",
+    "category": "Ferramentas",
+    "image": "assets/nova-malpetrim.jpg",
+    "content": "<p>Ferramentas físicas e digitais têm um papel vital para narradores. Neste artigo apresentamos um conjunto de ferramentas — desde fichas imprimíveis até apps de gerenciamento de sessões — e explicamos quando e por que usá-las.</p><h3>Dicas práticas</h3><ul><li>Prepare recursos visuais simples para apoiar cenas-chave.</li><li>Use timers para criar tensão quando apropriado.</li><li>Mantenha uma caixa de ferramentas com variantes de regras para flexibilizar a sessão.</li></ul><p>Ao final, oferecemos modelos de templates que você pode adaptar para seu grupo.</p>"
+  },
+  {
+    "id": "3",
+    "title": "Mapas que Contam Histórias: Como Criar Cenários Memoráveis",
+    "author": "L. Cartógrafa",
+    "date": "02 de Agosto, 2025",
+    "readTime": "6 min",
+    "category": "Design",
+    "image": "assets/nova-malpetrim.jpg",
+  	"content": "<p>Mapas são mais do que posições: são recordatórios narrativos. Neste texto vemos como trabalhar camadas — geografia, pontos de interesse e sugestões de cena — para que o mapa conte uma história por si só.</p><h3>Processo</h3><ol><li>Defina o conflito central do local.</li><li>Desenhe a geografia pensando em possibilidades de movimento e confronto.</li><li>Insira 3-5 pontos que provoquem perguntas nos jogadores.</li></ol><p>Incluímos exemplos visuais e um checklist para mapear rapidamente qualquer cenário.</p>" 
+  },
+  {
+    "id": "4",
+    "title": "Ritual de Balanceamento: Ajustando Mecânicas sem Perder a Alma do Jogo",
+    "author": "G. Balanceador",
+    "date": "15 de Julho, 2025",
+    "readTime": "7 min",
+    "category": "Design",
+    "image": "assets/nova-malpetrim.jpg",
+  	"content": "<p>Balancear é mais do que ajustar números — é preservar a experiência desejada. Aqui propomos um ritual de balanceamento em três etapas: identificar intenção, testar sob condições variadas e ajustar feedback narrativo.</p><h3>Etapas</h3><ul><li>Rastreie as intenções de design (tensão, dilema, heroísmo).</li><li>Crie cenários rápidos para testar consequências indesejadas.</li><li>Regule recompensas para alinhar risco e narrativa.</li></ul><p>O artigo traz estudos de caso e uma planilha simples para acompanhar métricas de jogo.</p>" 
+  },
+  {
+    "id": "5",
+    "title": "Vozes na Forja: Entrevista com Narradores Independentes",
+    "author": "Equipe Forja",
+    "date": "01 de Junho, 2025",
+    "readTime": "9 min",
+    "category": "Entrevistas",
+    "image": "assets/nova-malpetrim.jpg",
+  	"content": "<p>Nesta edição trazemos entrevistas com quatro narradores independentes que compartilham rotinas, bloqueios criativos e recursos favoritos. As conversas abordam como montar um calendário criativo, como lidar com o fracasso e como transformar sessões em conteúdo compartilhável.</p><h3>Destaques</h3><ul><li>Planejamento leve: roteiros modulares em vez de scripts rígidos.</li><li>Construção de comunidade: envolva jogadores na criação de lore.</li><li>Monetização ética: dicas para narradores que desejam cobrar por sessões.</li></ul><p>Incluímos links para ferramentas e leituras recomendadas no final.</p>" 
+  },
+  {
+    "id": "6",
+    "title": "Tecnologias Narrativas: Ferramentas Digitais para Contar Histórias",
+    "author": "A. Tech",
+    "date": "20 de Maio, 2025",
+    "readTime": "10 min",
+    "category": "Tecnologia",
+    "image": "assets/nova-malpetrim.jpg",
+  	"content": "<p>A tecnologia trouxe novas possibilidades para narradores e criadores. Revisamos plataformas de gerenciamento de sessões, ferramentas de mapa colaborativo e utilitários de gravação/editoração que aceleram a produção de conteúdo.</p><h3>Ferramentas em foco</h3><ul><li>Plataformas de sessão remota (video + tablesteading integrados).</li><li>Aplicativos de gerenciamento de NPCs e ganchos narrativos.</li><li>Frameworks para gerar conteúdo procedural controlado pelo narrador.</li></ul><p>Concluímos com recomendações de integração: como montar um stack de ferramentas com baixo atrito e alto retorno.</p>" 
+  }
+]
