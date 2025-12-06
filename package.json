@@ -5,7 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "start:server": "ts-node -r tsconfig-paths/register server/src/main.ts",
+    "start:server:dev": "ts-node-dev --respawn --transpile-only --prefer-ts-exts -r tsconfig-paths/register server/src/main.ts"
   },
   "private": true,
   "dependencies": {
@@ -15,11 +17,23 @@
     "@angular/forms": "^20.2.0-next",
     "@angular/platform-browser": "^20.2.0-next",
     "@angular/router": "^20.2.0-next",
+    "@nestjs/common": "^10.3.0",
+    "@nestjs/config": "^4.0.2",
+    "@nestjs/core": "^10.3.0",
+    "@nestjs/mapped-types": "^2.1.0",
+    "@nestjs/platform-express": "^10.3.0",
+    "@nestjs/typeorm": "^10.0.1",
     "@tailwindcss/postcss": "^4.1.16",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
+    "dotenv": "^17.2.3",
+    "pg": "^8.11.3",
     "postcss": "^8.5.6",
+    "reflect-metadata": "^0.1.13",
     "rxjs": "~7.8.0",
     "tailwindcss": "^4.1.16",
     "tslib": "^2.3.0",
+    "typeorm": "^0.3.19",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
@@ -29,6 +43,8 @@
     "@types/jest": "^30.0.0",
     "@types/node": "^16.11.35",
     "ts-node": "~10.9.0",
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "~5.8.0"
   }
 }
