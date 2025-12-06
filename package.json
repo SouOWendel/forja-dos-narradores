@@ -7,7 +7,12 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "start:server": "ts-node -r tsconfig-paths/register server/src/main.ts",
-    "start:server:dev": "ts-node-dev --respawn --transpile-only --prefer-ts-exts -r tsconfig-paths/register server/src/main.ts"
+    "start:server:dev": "ts-node-dev --respawn --transpile-only --prefer-ts-exts -r tsconfig-paths/register server/src/main.ts",
+    "seed": "ts-node -r tsconfig-paths/register server/src/seed.ts",
+    "clear:posts": "ts-node -r tsconfig-paths/register server/src/clear-posts.ts",
+    "create:admin": "ts-node -r tsconfig-paths/register server/src/create-admin.ts",
+    "update:admin": "ts-node -r tsconfig-paths/register server/src/update-admin-title.ts",
+    "check:admin": "ts-node -r tsconfig-paths/register server/src/check-and-update-admin.ts"
   },
   "private": true,
   "dependencies": {
@@ -24,6 +29,8 @@
     "@nestjs/platform-express": "^10.3.0",
     "@nestjs/typeorm": "^10.0.1",
     "@tailwindcss/postcss": "^4.1.16",
+    "@types/bcrypt": "^6.0.0",
+    "bcrypt": "^6.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "dotenv": "^17.2.3",
