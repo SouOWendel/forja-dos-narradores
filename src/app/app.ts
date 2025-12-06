@@ -12,32 +12,39 @@ import { FooterComponent } from './shared/components/footer/footer';
 
   imports: [CommonModule, RouterOutlet, HeaderComponent, HeroComponent, FooterComponent],
   template: `
-    <app-header></app-header>
-		<app-hero *ngIf="showHero"></app-hero>
-		<main>
+    <app-header *ngIf="!isAdminRoute"></app-header>
+		<app-hero *ngIf="showHero && !isAdminRoute"></app-hero>
+		<main [class.admin-layout]="isAdminRoute">
 			<router-outlet></router-outlet>
 		</main>
-		<app-footer></app-footer>
+		<app-footer *ngIf="!isAdminRoute"></app-footer>
   `,
   styleUrls: ['./app.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'Forja dos Narradores';
   showHero = true;
+  isAdminRoute = false;
 
   private sub: any;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    // Esconde o hero quando a rota for /blog/:id (detalhe)
+    // Detecta se está em área admin ou em detalhes de post
     this.sub = this.router.events.pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd)).subscribe((ev) => {
-      // Se a URL começar com /blog/ seguido de algo (ex.: /blog/1), escondemos o hero
       const url = ev.urlAfterRedirects || ev.url;
+      
+      // Detecta se é rota admin
+      this.isAdminRoute = url.startsWith('/admin');
+      
+      // Esconde hero se for /blog/:id (mas não afeta admin, pois admin já esconde tudo)
       this.showHero = !/^\/blog\/[^/]+/.test(url);
     });
-    // também faz uma checagem inicial
+    
+    // Checagem inicial
     const initialUrl = this.router.url || '';
+    this.isAdminRoute = initialUrl.startsWith('/admin');
     this.showHero = !/^\/blog\/[^/]+/.test(initialUrl);
   }
 
