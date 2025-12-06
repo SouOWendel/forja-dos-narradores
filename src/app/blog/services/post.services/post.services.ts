@@ -4,47 +4,113 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 /**
- * Simple Post model used by the service.
- * Keep this in sync with the JSON placed in `src/assets/posts.json`.
+ * User model - matches the User entity from backend
+ */
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  title?: string;
+  profilePhoto?: string;
+  isAdmin: boolean;
+}
+
+/**
+ * Post model - matches the API response from NestJS backend
  */
 export interface Post {
   id: string;
   title: string;
-  author: string;
-  date: string;
-  readTime?: string;
-  category?: string;
-  image?: string;
+  excerpt?: string;
   content: string;
+  author?: User;      // Relationship to User entity
+  authorId?: string;  // Foreign key for creating/updating
+  image?: string;
+  categories?: string[];  // Array of categories
+  tags?: string[];
+  published: boolean;
+  viewCount: number;
+  createdAt: string;  // ISO date string from API
+  updatedAt: string;  // ISO date string from API
 }
 
 /**
  * PostService
- * - Usa HttpClient para buscar posts de um arquivo JSON em assets.
- * - `providedIn: 'root'` torna o serviço disponível globalmente sem precisar declará-lo em um módulo.
- * - Em um app real, substitua a URL por um endpoint de API.
+ * - Conecta com a API NestJS rodando em localhost:3000
+ * - Usa HttpClient para fazer requisições HTTP
+ * - `providedIn: 'root'` torna o serviço disponível globalmente
  */
 @Injectable({ providedIn: 'root' })
 export class PostService {
-  // Caminho para um JSON estático com os posts (criado em src/assets/posts.json)
-  private readonly postsUrl = 'assets/posts.json';
+  // URL base da API NestJS
+  private readonly apiUrl = 'http://localhost:3000/api/posts';
 
   constructor(private http: HttpClient) {}
 
   /**
-   * Retorna o array completo de posts.
-   * Observable permite composição reativa (map/filter) e assincronismo.
+   * Retorna todos os posts publicados da API
+   * GET http://localhost:3000/api/posts?published=true
    */
   getPosts(): Observable<Post[]> {
-    return this.http.get<Post[]>(this.postsUrl);
+    return this.http.get<Post[]>(`${this.apiUrl}?published=true`);
   }
 
   /**
-   * Busca um post por id. Retorna Observable<Post | undefined>.
-   * Implementado via getPosts() + map para manter o serviço simples.
+   * Busca posts por categoria
+   * GET http://localhost:3000/api/posts/category/:category
+   * Exemplo: getPosts('Teoria Narrativa')
    */
-  getPost(id: string): Observable<Post | undefined> {
-    return this.getPosts().pipe(map((posts) => posts.find((p) => p.id === id)));
+  getPostsByCategory(category: string): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.apiUrl}/category/${encodeURIComponent(category)}`);
+  }
+
+  /**
+   * Busca um post específico por ID
+   * GET http://localhost:3000/api/posts/:id
+   * Agora usa o endpoint direto da API ao invés de filtrar localmente
+   */
+  getPost(id: string): Observable<Post> {
+    return this.http.get<Post>(`${this.apiUrl}/${id}`);
+  }
+
+  /**
+   * ADMIN: Retorna TODOS os posts (incluindo não publicados)
+   * GET http://localhost:3000/api/posts
+   */
+  getAllPosts(): Observable<Post[]> {
+    return this.http.get<Post[]>(this.apiUrl);
+  }
+
+  /**
+   * ADMIN: Cria um novo post
+   * POST http://localhost:3000/api/posts
+   */
+  createPost(post: Partial<Post>): Observable<Post> {
+    return this.http.post<Post>(this.apiUrl, post);
+  }
+
+  /**
+   * ADMIN: Atualiza um post existente
+   * PATCH http://localhost:3000/api/posts/:id
+   */
+  updatePost(id: string, post: Partial<Post>): Observable<Post> {
+    return this.http.patch<Post>(`${this.apiUrl}/${id}`, post);
+  }
+
+  /**
+   * ADMIN: Busca todos os usuários
+   * GET http://localhost:3000/api/users
+   */
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>('http://localhost:3000/api/users');
+  }
+
+  /**
+   * ADMIN: Deleta um post
+   * DELETE http://localhost:3000/api/posts/:id
+   */
+  deletePost(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
 
