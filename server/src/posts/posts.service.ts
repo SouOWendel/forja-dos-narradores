@@ -12,22 +12,36 @@ export class PostsService {
     private readonly postsRepository: Repository<Post>,
   ) {}
 
+  private cleanPost(post: Post): Post {
+    if (post.author) {
+      delete post.author.password;
+    }
+    return post;
+  }
+
+  private cleanPosts(posts: Post[]): Post[] {
+    return posts.map(post => this.cleanPost(post));
+  }
+
   async create(createPostDto: CreatePostDto): Promise<Post> {
     const post = this.postsRepository.create(createPostDto);
-    return await this.postsRepository.save(post);
+    const saved = await this.postsRepository.save(post);
+    return this.cleanPost(saved);
   }
 
   async findAll(): Promise<Post[]> {
-    return await this.postsRepository.find({
+    const posts = await this.postsRepository.find({
       order: { createdAt: 'DESC' },
     });
+    return this.cleanPosts(posts);
   }
 
   async findPublished(): Promise<Post[]> {
-    return await this.postsRepository.find({
+    const posts = await this.postsRepository.find({
       where: { published: true },
       order: { createdAt: 'DESC' },
     });
+    return this.cleanPosts(posts);
   }
 
   async findOne(id: string): Promise<Post> {
@@ -41,22 +55,34 @@ export class PostsService {
     post.viewCount += 1;
     await this.postsRepository.save(post);
 
-    return post;
+    return this.cleanPost(post);
   }
 
   async findByCategory(category: string): Promise<Post[]> {
-    return await this.postsRepository.find({
-      where: { category, published: true },
+    // Busca posts que contenham a categoria no array categories
+    const posts = await this.postsRepository.find({
+      where: { published: true },
       order: { createdAt: 'DESC' },
     });
+    
+    // Filtra posts que têm a categoria especificada
+    const filtered = posts.filter(post => 
+      post.categories && post.categories.includes(category)
+    );
+    return this.cleanPosts(filtered);
   }
 
   async update(id: string, updatePostDto: UpdatePostDto): Promise<Post> {
-    const post = await this.findOne(id);
+    const post = await this.postsRepository.findOne({ where: { id } });
+    
+    if (!post) {
+      throw new NotFoundException(`Post with ID ${id} not found`);
+    }
     
     Object.assign(post, updatePostDto);
     
-    return await this.postsRepository.save(post);
+    const updated = await this.postsRepository.save(post);
+    return this.cleanPost(updated);
   }
 
   async remove(id: string): Promise<void> {
