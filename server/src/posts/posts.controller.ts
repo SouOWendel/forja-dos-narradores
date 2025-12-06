@@ -1,0 +1,60 @@
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
+import { PostsService } from './posts.service';
+import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
+
+@Controller('api/posts')
+export class PostsController {
+  constructor(private readonly postsService: PostsService) {}
+
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  create(@Body() createPostDto: CreatePostDto) {
+    return this.postsService.create(createPostDto);
+  }
+
+  @Get()
+  findAll(@Query('published') published?: string) {
+    if (published === 'true') {
+      return this.postsService.findPublished();
+    }
+    return this.postsService.findAll();
+  }
+
+  @Get('category/:category')
+  findByCategory(@Param('category') category: string) {
+    return this.postsService.findByCategory(category);
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.postsService.findOne(id);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
+    return this.postsService.update(id, updatePostDto);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  remove(@Param('id') id: string) {
+    return this.postsService.remove(id);
+  }
+
+  @Post(':id/views')
+  incrementViews(@Param('id') id: string) {
+    return this.postsService.incrementViews(id);
+  }
+}
