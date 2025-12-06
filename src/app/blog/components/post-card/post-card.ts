@@ -11,25 +11,33 @@ import { Post } from '../../services/post.services/post.services';
 			<div class="post-image-container">
 				<img [src]="post?.image || 'assets/nova-malpetrim.jpg'" [alt]="post?.title || 'Imagem do Post'" class="post-image rounded-lg w-full object-cover">
 			</div>
-			<div class="post-meta flex justify-between items-center text-sm text-gray-500 my-2">
-				<span class="post-category py-1 px-8 bg-gray-300 rounded-sm">{{ post?.category || 'Categoria' }}</span>
-				<div class="post-info flex space-x-1">
-					<span class="post-date">{{ post?.date || '' }}</span>
-					<span *ngIf="post">•</span>
-					<span class="read-time">{{ post?.readTime || '' }}</span>
-				</div>
+		<div class="post-meta flex justify-between items-center text-sm text-gray-500 my-2">
+			<div class="flex items-center gap-2">
+				<span class="post-category py-1 px-8 bg-gray-300 rounded-sm">
+					{{ post?.categories?.[0] || 'Sem categoria' }}
+				</span>
+				<span *ngIf="getExtraCategoriesCount() > 0" 
+					class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-semibold">
+					+{{ getExtraCategoriesCount() }}
+				</span>
 			</div>
+			<div class="post-info flex space-x-1">
+				<span class="post-date">{{ formatDate(post?.createdAt) }}</span>
+				<span *ngIf="post">•</span>
+				<span class="read-time">{{ '1 min' }}</span>
+			</div>
+		</div>
 			<div class="post-content">
 				<h3 class="text-2xl line-clamp-2">{{ post?.title }}</h3>
-				<p class="line-clamp-3">{{ post?.content }}</p>
+				<p class="line-clamp-3">{{ post?.excerpt }}</p>
 			</div>
-			<div class="post-author flex items-center mt-4 space-x-2">
-				<img [src]="post?.image || 'assets/nova-malpetrim.jpg'" alt="Foto do Autor" class="author-image rounded-full w-8 h-8">
-				<div class="author-info flex flex-col">
-					<span class="author-name text-sm font-bold">{{ post?.author || 'Autor' }}</span>
-					<span class="author-role text-sm/5 text-gray-400">Desenvolvedor & Community Expert</span>
-				</div>
-			</div>
+		<div class="post-author flex items-center mt-4 space-x-2">
+			<img [src]="post?.author?.profilePhoto || 'assets/nova-malpetrim.jpg'" alt="Foto do Autor" class="author-image rounded-full w-8 h-8">
+		<div class="author-info flex flex-col">
+			<span class="author-name text-sm font-bold">{{ post?.author?.name || 'Autor' }}</span>
+			<span class="author-role text-sm/5 text-gray-400">{{ post?.author?.title || 'Escritor' }}</span>
+		</div>
+		</div>
 		</article>
 	`,
 	styles: `
@@ -41,4 +49,27 @@ import { Post } from '../../services/post.services/post.services';
 })
 export class PostCardComponent {
 	@Input() post?: Post;
+
+	getExtraCategoriesCount(): number {
+		if (!this.post?.categories || this.post.categories.length <= 1) {
+			return 0;
+		}
+		return this.post.categories.length - 1;
+	}
+
+	formatDate(dateString?: string): string {
+		if (!dateString) return '';
+		
+		const date = new Date(dateString);
+		const months = [
+			'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+			'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+		];
+		
+		const day = date.getDate();
+		const month = months[date.getMonth()];
+		const year = date.getFullYear();
+		
+		return `${day} de ${month}, ${year}`;
+	}
 }
