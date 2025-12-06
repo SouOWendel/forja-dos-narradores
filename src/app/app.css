@@ -10,3 +10,9 @@ header {
 .content {
   padding: var(--content-padding);
 }
+
+/* Admin Layout - sem padding, fundo cinza */
+main.admin-layout {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
