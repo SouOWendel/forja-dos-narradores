@@ -28,11 +28,13 @@ import { PostCounter } from '../../components/post-counter/post-counter';
 				<article *ngIf="(post$ | async) as post">
 					<h1 class="text-4xl font-serif mb-2">{{ post.title }}</h1>
 					<div class="post-meta text-sm text-gray-500 mb-4">
-						<span>{{ post.author }}</span>
+						<span>{{ post.author?.name || 'Autor' }}</span>
+						<span *ngIf="post.author?.title" class="mx-2">•</span>
+						<span *ngIf="post.author?.title" class="italic">{{ post.author?.title }}</span>
 						<span class="mx-2">•</span>
-						<span>{{ post.date }}</span>
+						<span>{{ post.createdAt }}</span>
 						<span class="mx-2">•</span>
-						<span>{{ post.readTime }}</span>
+						<span>{{ '1 min' }}</span>
 					</div>
 
 					<img *ngIf="post.image" [src]="post.image" alt="Imagem do post" class="w-full rounded-md mb-6 object-cover" />
