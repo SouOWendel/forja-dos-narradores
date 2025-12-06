@@ -27,18 +27,17 @@ export class CreatePostDto {
 
   @IsString()
   @IsOptional()
-  @MaxLength(255)
-  author?: string;
+  authorId?: string;
 
   @IsString()
   @IsOptional()
   @MaxLength(500)
   image?: string;
 
-  @IsString()
+  @IsArray()
   @IsOptional()
-  @MaxLength(100)
-  category?: string;
+  @IsString({ each: true })
+  categories?: string[];
 
   @IsArray()
   @IsOptional()

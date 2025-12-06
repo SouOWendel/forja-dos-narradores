@@ -4,7 +4,10 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
 
 @Entity('posts')
 export class Post {
@@ -20,14 +23,19 @@ export class Post {
   @Column({ type: 'text' })
   content: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  author: string;
+  // Relação: muitos posts podem ter um autor (User)
+  @ManyToOne(() => User, (user) => user.posts, { eager: true, nullable: true })
+  @JoinColumn({ name: 'authorId' })
+  author: User;
+
+  @Column({ type: 'uuid', nullable: true })
+  authorId: string;
 
   @Column({ type: 'varchar', length: 500, nullable: true })
   image: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: true })
-  category: string;
+  @Column({ type: 'simple-array', nullable: true })
+  categories: string[];
 
   @Column({ type: 'simple-array', nullable: true })
   tags: string[];
