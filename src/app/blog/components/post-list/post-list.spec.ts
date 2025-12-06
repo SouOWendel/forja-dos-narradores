@@ -9,7 +9,13 @@ describe('PostListComponent', () => {
   let component: PostListComponent;
 
   const mockPosts: Post[] = [
-    { id: '1', title: 'T1', author: 'A', date: 'D', content: 'C' }
+    {
+			id: '1', title: 'T1', content: 'C',
+			published: false,
+			viewCount: 0,
+			createdAt: '',
+			updatedAt: ''
+		}
   ];
 
   beforeEach(async () => {

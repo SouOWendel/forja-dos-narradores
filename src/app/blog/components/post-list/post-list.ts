@@ -11,10 +11,10 @@ import { catchError, finalize, shareReplay, startWith, switchMap, tap } from 'rx
 @Component({
   selector: 'app-post-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, PostCardComponent, Categories, PaginationComponent],
+  imports: [CommonModule, RouterModule, PostCardComponent, Categories, /* PaginationComponent */],
   template: `
-    <section class="container mx-auto p-4">
-      <app-categories></app-categories>
+    <section class="max-w-7xl mx-auto p-4">
+      <app-categories (categorySelected)="onCategoryChange($event)"></app-categories>
       <hr class="my-4 border-gray-300" />
 
       <div *ngIf="loading$ | async" class="py-8 text-center">Carregando posts...</div>
@@ -29,45 +29,61 @@ import { catchError, finalize, shareReplay, startWith, switchMap, tap } from 'rx
         </a>
       </section>
 
-      <app-pagination></app-pagination>
+			<!-- Paginação Futura -->
+      <!-- <app-pagination></app-pagination> -->
     </section>
   `,
   styles: ``
 })
 export class PostListComponent {
   posts$: Observable<Post[]> = of([]);
-  loading$ = new BehaviorSubject<boolean>(false);
+  loading$ = new BehaviorSubject<boolean>(true);
   error$ = new BehaviorSubject<string | null>(null);
-  private reload$ = new Subject<void>();
+  
+  // Subject que emite a categoria selecionada
+  private categoryFilter$ = new BehaviorSubject<string | null>(null);
+  private isFirstLoad = true;
 
   constructor(private postService: PostService) {
-    // Reactive fetch triggered on reload$.startWith() so the template's async pipe can subscribe
-    // without conditional gating. shareReplay(1) caches the result during the component lifecycle.
-    this.posts$ = this.reload$.pipe(
-      startWith(void 0),
+    // Reactive fetch que reage a mudanças de categoria
+    this.posts$ = this.categoryFilter$.pipe(
       tap(() => {
-        this.loading$.next(true);
+        // Só mostra "carregando" no primeiro load
+        if (this.isFirstLoad) {
+          this.loading$.next(true);
+        }
         this.error$.next(null);
       }),
-      switchMap(() =>
-        this.postService.getPosts().pipe(
+      switchMap((category) => {
+        // Se categoria é null, busca todos. Senão, busca por categoria
+        const request$ = category 
+          ? this.postService.getPostsByCategory(category)
+          : this.postService.getPosts();
+        
+        return request$.pipe(
+          tap((posts) => console.log('Posts recebidos:', posts)),
           catchError((err) => {
             console.error('Erro ao carregar posts', err);
             this.error$.next('Falha ao carregar posts. Tente novamente.');
             return of([] as Post[]);
           }),
-          finalize(() => this.loading$.next(false)),
-        ),
-      ),
+          finalize(() => {
+            this.loading$.next(false);
+            this.isFirstLoad = false;
+          }),
+        );
+      }),
       shareReplay(1),
     );
-
-    // No manual subscribe needed: template async pipe will subscribe immediately because posts$ starts
-    // with startWith and does not depend on loading$ to be false.
   }
 
-  // Exposed method for retry button
+  // Método chamado quando categoria muda
+  onCategoryChange(category: string | null): void {
+    this.categoryFilter$.next(category);  // Emite nova categoria, dispara busca
+  }
+
+  // Método para retry (busca novamente com a categoria atual)
   reload(): void {
-    this.reload$.next();
+    this.categoryFilter$.next(this.categoryFilter$.value);
   }
 }
