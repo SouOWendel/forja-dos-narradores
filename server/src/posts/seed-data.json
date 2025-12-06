@@ -1,0 +1,56 @@
+[
+  {
+    "title": "A Jornada do Herói nas Narrativas Modernas",
+    "excerpt": "Explorando como a estrutura clássica da jornada do herói continua relevante na criação de histórias contemporâneas.",
+    "content": "<h2>Introdução</h2><p>A jornada do herói, conceito popularizado por Joseph Campbell, permanece como uma das estruturas narrativas mais poderosas e versáteis da literatura mundial.</p><h2>Os Estágios da Jornada</h2><p>Desde o chamado à aventura até o retorno transformado, cada etapa oferece oportunidades únicas para desenvolvimento de personagem e construção de significado.</p><h3>O Mundo Comum</h3><p>Todo grande herói começa em um lugar familiar, onde as limitações do cotidiano estabelecem o contraste necessário para a transformação vindoura.</p><h3>O Chamado à Aventura</h3><p>Algo perturba o equilíbrio, forçando o protagonista a considerar uma mudança radical em sua vida.</p><p>Exemplos modernos incluem séries como Breaking Bad, onde Walter White recebe seu diagnóstico fatal, ou Harry Potter descobrindo ser um bruxo.</p>",
+    "image": "https://picsum.photos/800/450?random=1",
+    "categories": ["Teoria Narrativa", "Estrutura"],
+    "tags": ["jornada do herói", "storytelling", "narrativa", "joseph campbell"],
+    "published": true
+  },
+  {
+    "title": "Construindo Mundos Fantásticos Críveis",
+    "excerpt": "Técnicas essenciais para criar universos de fantasia que sejam ao mesmo tempo imaginativos e internamente consistentes.",
+    "content": "<h2>A Importância da Consistência</h2><p>Um mundo fantástico só funciona quando segue suas próprias regras. A magia pode existir, mas precisa ter limites e consequências.</p><h2>Elementos Fundamentais</h2><p>Geografia, história, cultura, economia e sistemas mágicos ou tecnológicos devem se entrelaçar de forma orgânica.</p><h3>Geografia e Clima</h3><p>O ambiente físico influencia diretamente a cultura e o desenvolvimento das civilizações no seu mundo.</p><h3>Sistemas de Magia</h3><p>Brandon Sanderson popularizou as 'Leis da Magia': quanto mais o leitor entende sobre como a magia funciona, mais satisfatório é quando o herói resolve problemas com ela.</p><p>Considere custos, limitações e consequências para tornar a magia interessante narrativamente.</p>",
+    "image": "https://picsum.photos/800/450?random=2",
+    "categories": ["Worldbuilding"],
+    "tags": ["fantasia", "worldbuilding", "magia", "criação de mundos"],
+    "published": true
+  },
+  {
+    "title": "Diálogos Naturais: A Arte da Conversa Ficcional",
+    "excerpt": "Como escrever diálogos que soem autênticos, revelem personagem e avancem a trama simultaneamente.",
+    "content": "<h2>O Que Faz Um Diálogo Funcionar</h2><p>Diálogos eficazes não são meras transcrições de conversas reais - são versões estilizadas que parecem reais enquanto servem propósitos narrativos específicos.</p><h2>Subtexto e Subtons</h2><p>O que não é dito muitas vezes é mais importante que as palavras pronunciadas. Personagens mentem, escondem, insinuam.</p><h3>Voz Única Para Cada Personagem</h3><p>Cada personagem deve ter padrões de fala distintos: vocabulário, ritmo, uso de gírias, formalidade.</p><h3>Diálogo Como Ação</h3><p>Bons diálogos avançam a trama, revelam caráter e criam tensão. Evite 'small talk' que não serve propósito narrativo.</p><p>Exemplos: os diálogos afiados de Aaron Sorkin ou as conversas aparentemente banais mas carregadas de tensão em obras de Tarantino.</p>",
+    "image": "https://picsum.photos/800/450?random=3",
+    "categories": ["Técnica", "Personagens"],
+    "tags": ["diálogos", "personagens", "escrita", "técnica narrativa"],
+    "published": true
+  },
+  {
+    "title": "Estrutura em Três Atos: Além do Básico",
+    "excerpt": "Dominando a estrutura clássica e aprendendo quando e como subvertê-la para criar histórias memoráveis.",
+    "content": "<h2>A Estrutura Fundamental</h2><p>Ato I (Setup) - Ato II (Confrontação) - Ato III (Resolução). Simples na superfície, mas infinitamente flexível na execução.</p><h2>Pontos de Virada Cruciais</h2><p>O primeiro ponto de virada (~25%) lança o protagonista irrevogavelmente na jornada. O segundo (~75%) fornece a revelação ou ferramenta necessária para o clímax.</p><h3>O Meio Que Não Murcha</h3><p>O segundo ato é onde muitas histórias perdem força. Mantenha a tensão com: complicações crescentes, revelações de personagem, subtramas que convergem.</p><h3>Subvertendo Expectativas</h3><p>Uma vez que você entende a estrutura clássica, pode brincar com ela. Veja como Pulp Fiction fragmenta a linha temporal ou como Memento a inverte completamente.</p>",
+    "image": "https://picsum.photos/800/450?random=4",
+    "categories": ["Estrutura", "Teoria Narrativa"],
+    "tags": ["estrutura", "três atos", "roteiro", "plot"],
+    "published": true
+  },
+  {
+    "title": "Personagens Complexos: Além de Heróis e Vilões",
+    "excerpt": "Criando personagens tridimensionais com motivações conflitantes, falhas interessantes e arcos de transformação significativos.",
+    "content": "<h2>A Falácia do Herói Perfeito</h2><p>Personagens sem falhas são entediantes. Suas imperfeições, contradições e erros os tornam humanos e relacionáveis.</p><h2>Motivação e Agência</h2><p>Todo personagem principal precisa de: um objetivo claro, razões pessoais convincentes para persegui-lo, obstáculos significativos no caminho.</p><h3>A Ferida Interna</h3><p>Personagens memoráveis carregam traumas, medos ou crenças limitantes do passado que influenciam suas ações no presente.</p><h3>Transformação Real</h3><p>O arco do personagem deve refletir mudança genuína - não apenas externa (vencer o vilão) mas interna (superar a ferida).</p><p>Exemplos: Walter White em Breaking Bad, Zuko em Avatar, ou Elizabeth Bennet em Orgulho e Preconceito - todos passam por transformações profundas e convincentes.</p>",
+    "image": "https://picsum.photos/800/450?random=5",
+    "categories": ["Personagens"],
+    "tags": ["personagens", "desenvolvimento", "arco", "caracterização"],
+    "published": true
+  },
+  {
+    "title": "Ritmo Narrativo: Controlando Tempo e Tensão",
+    "excerpt": "Técnicas para acelerar ou desacelerar sua narrativa, mantendo os leitores engajados do início ao fim.",
+    "content": "<h2>Variação É a Chave</h2><p>Uma história que mantém o mesmo ritmo o tempo todo se torna monótona. Alterne entre cenas de ação intensa e momentos de reflexão mais calma.</p><h2>Técnicas Para Acelerar</h2><p>Frases curtas. Parágrafos breves. Diálogo rápido. Cortes entre cenas. Tempo verbal presente. Menos descrição.</p><h3>Técnicas Para Desacelerar</h3><p>Descrições detalhadas, digressões filosóficas, flashbacks elaborados, e exploração profunda de estados emocionais internos.</p><h3>Subtramas e Entrelaçamento</h3><p>Alternar entre múltiplas linhas narrativas cria ritmo naturalmente e permite controlar quando informações são reveladas.</p><p>Estude mestres do ritmo como Lee Child (thrillers acelerados) ou Gabriel García Márquez (prosa lírica e contemplativa).</p>",
+    "image": "https://picsum.photos/800/450?random=6",
+    "categories": ["Técnica", "Estrutura"],
+    "tags": ["ritmo", "pacing", "tensão", "estrutura narrativa"],
+    "published": false
+  }
+]
