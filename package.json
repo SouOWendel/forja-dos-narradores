@@ -9,6 +9,8 @@
     "start:server": "ts-node -r tsconfig-paths/register server/src/main.ts",
     "start:server:dev": "ts-node-dev --respawn --transpile-only --prefer-ts-exts -r tsconfig-paths/register server/src/main.ts",
     "seed": "ts-node -r tsconfig-paths/register server/src/seed.ts",
+    "seed:categories": "ts-node -r tsconfig-paths/register server/src/seed-categories.ts",
+    "migrate:categories": "ts-node -r tsconfig-paths/register server/src/migrate-categories.ts",
     "clear:posts": "ts-node -r tsconfig-paths/register server/src/clear-posts.ts",
     "create:admin": "ts-node -r tsconfig-paths/register server/src/create-admin.ts",
     "update:admin": "ts-node -r tsconfig-paths/register server/src/update-admin-title.ts",
