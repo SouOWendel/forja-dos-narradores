@@ -5,9 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  ManyToMany,
   JoinColumn,
+  JoinTable,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { Category } from '../../categories/entities/category.entity';
 
 @Entity('posts')
 export class Post {
@@ -34,8 +37,14 @@ export class Post {
   @Column({ type: 'varchar', length: 500, nullable: true })
   image: string;
 
-  @Column({ type: 'simple-array', nullable: true })
-  categories: string[];
+  // Relação ManyToMany com categorias
+  @ManyToMany(() => Category, (category) => category.posts, { eager: true })
+  @JoinTable({
+    name: 'post_categories',
+    joinColumn: { name: 'postId', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'categoryId', referencedColumnName: 'id' },
+  })
+  categories: Category[];
 
   @Column({ type: 'simple-array', nullable: true })
   tags: string[];

@@ -4,6 +4,7 @@ import {
   IsOptional,
   IsBoolean,
   IsArray,
+  IsNumber,
   MaxLength,
   MinLength,
 } from 'class-validator';
@@ -36,8 +37,8 @@ export class CreatePostDto {
 
   @IsArray()
   @IsOptional()
-  @IsString({ each: true })
-  categories?: string[];
+  @IsNumber({}, { each: true })
+  categoryIds?: number[];
 
   @IsArray()
   @IsOptional()
