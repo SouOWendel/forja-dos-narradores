@@ -14,7 +14,7 @@ import { Post } from '../../services/post.services/post.services';
 		<div class="post-meta flex justify-between items-center text-sm text-gray-500 my-2">
 			<div class="flex items-center gap-2">
 				<span class="post-category py-1 px-8 bg-gray-300 rounded-sm">
-					{{ post?.categories?.[0] || 'Sem categoria' }}
+					{{ post?.categories?.[0]?.nome || 'Sem categoria' }}
 				</span>
 				<span *ngIf="getExtraCategoriesCount() > 0" 
 					class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-semibold">
@@ -29,7 +29,7 @@ import { Post } from '../../services/post.services/post.services';
 		</div>
 			<div class="post-content">
 				<h3 class="text-2xl line-clamp-2">{{ post?.title }}</h3>
-				<p class="line-clamp-3">{{ post?.excerpt }}</p>
+				<p class="excerpt line-clamp-3">{{ post?.excerpt }}</p>
 			</div>
 		<div class="post-author flex items-center mt-4 space-x-2">
 			<img [src]="post?.author?.profilePhoto || 'assets/nova-malpetrim.jpg'" alt="Foto do Autor" class="author-image rounded-full w-8 h-8">
@@ -44,6 +44,33 @@ import { Post } from '../../services/post.services/post.services';
 		.post-card h3 { font-family: 'DM Serif Display', serif; }
 		.post-card p, .post-meta, .post-category, .post-info, .post-date, .read-time, .author-name {
 			font-family: 'DM Sans', sans-serif;
+		}
+		.post-image-container {
+			height: 245px;
+			overflow: hidden;
+		}
+		.post-content .excerpt {
+			margin-top: 0.5rem;
+			color: #4b5563; /* gray-600 */
+			min-height: 5rem; /* approximately 3 lines */
+		}
+		.post-image {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+		.author-image {
+			width: 32px;
+			height: 32px;
+			object-fit: cover;
+		}
+		.post-category {
+			font-family: 'DM Sans', sans-serif;
+			font-weight: 500;
+			font-size: 0.875rem; /* text-sm */
+		}
+		.post-meta {
+			font-size: 0.875rem; /* text-sm */
 		}
 	`
 })
