@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PostService, Post, User } from '../../../blog/services/post.services/post.services';
+import { PostService, Post, User, Category } from '../../../blog/services/post.services/post.services';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Observable } from 'rxjs';
 
@@ -104,15 +104,18 @@ import { Observable } from 'rxjs';
             <label *ngFor="let cat of availableCategories" class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
               <input
                 type="checkbox"
-                [value]="cat"
-                (change)="onCategoryChange($event, cat)"
-                [checked]="selectedCategories.includes(cat)"
+                [value]="cat.id"
+                (change)="onCategoryChange($event, cat.id)"
+                [checked]="selectedCategoryIds.includes(cat.id)"
                 class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-              <span class="ml-3 text-gray-700">{{ cat }}</span>
+              <span class="ml-3 text-gray-700">{{ cat.nome }}</span>
             </label>
           </div>
-          <p class="text-gray-600 text-xs mt-1">
-            Selecionadas: {{ selectedCategories.length > 0 ? selectedCategories.join(', ') : 'Nenhuma' }}
+          <p class="text-gray-600 text-xs mt-1" *ngIf="selectedCategoryIds.length > 0">
+            Selecionadas: {{ getSelectedCategoryNames() }}
+          </p>
+          <p class="text-gray-600 text-xs mt-1" *ngIf="selectedCategoryIds.length === 0">
+            Nenhuma categoria selecionada
           </p>
         </div>
 
@@ -193,14 +196,8 @@ export class PostFormComponent implements OnInit {
   successMessage = '';
   users$?: Observable<User[]>;
   
-  availableCategories = [
-    'Teoria Narrativa',
-    'Worldbuilding',
-    'Técnica',
-    'Estrutura',
-    'Personagens'
-  ];
-  selectedCategories: string[] = [];
+  availableCategories: Category[] = [];
+  selectedCategoryIds: number[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -221,20 +218,37 @@ export class PostFormComponent implements OnInit {
     });
   }
 
-  onCategoryChange(event: Event, category: string): void {
+  onCategoryChange(event: Event, categoryId: number): void {
     const checkbox = event.target as HTMLInputElement;
     if (checkbox.checked) {
-      if (!this.selectedCategories.includes(category)) {
-        this.selectedCategories.push(category);
+      if (!this.selectedCategoryIds.includes(categoryId)) {
+        this.selectedCategoryIds.push(categoryId);
       }
     } else {
-      this.selectedCategories = this.selectedCategories.filter(c => c !== category);
+      this.selectedCategoryIds = this.selectedCategoryIds.filter(id => id !== categoryId);
     }
+  }
+
+  getSelectedCategoryNames(): string {
+    return this.availableCategories
+      .filter(cat => this.selectedCategoryIds.includes(cat.id))
+      .map(cat => cat.nome)
+      .join(', ');
   }
 
   ngOnInit(): void {
     // Carrega lista de usuários
     this.users$ = this.postService.getAllUsers();
+
+    // Carrega categorias do banco
+    this.postService.getAllCategories().subscribe({
+      next: (categories) => {
+        this.availableCategories = categories;
+      },
+      error: (err) => {
+        console.error('Erro ao carregar categorias', err);
+      }
+    });
 
     // Verifica se está editando (URL tem ID) ou criando (URL = 'new')
     this.route.paramMap.subscribe(params => {
@@ -261,8 +275,8 @@ export class PostFormComponent implements OnInit {
           published: post.published
         });
         
-        // Carrega categorias selecionadas
-        this.selectedCategories = post.categories || [];
+        // Carrega IDs das categorias selecionadas
+        this.selectedCategoryIds = post.categories?.map(cat => cat.id) || [];
       },
       error: (err) => {
         console.error('Erro ao carregar post', err);
@@ -291,7 +305,7 @@ export class PostFormComponent implements OnInit {
       excerpt: this.postForm.value.excerpt,
       content: this.postForm.value.content,
       authorId: this.postForm.value.authorId, // ID do autor selecionado no dropdown
-      categories: this.selectedCategories, // Array de categorias selecionadas
+      categoryIds: this.selectedCategoryIds, // Array de IDs de categorias selecionadas
       image: this.postForm.value.image,
       tags: tags,
       published: this.postForm.value.published
