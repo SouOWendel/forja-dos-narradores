@@ -10,15 +10,6 @@ async function checkAndUpdateAdmin() {
   try {
     const dataSource = app.get(DataSource);
     
-    // Verifica se a coluna title existe
-    const columnExists = await dataSource.query(`
-      SELECT column_name 
-      FROM information_schema.columns 
-      WHERE table_name='users' AND column_name='title';
-    `);
-    
-    console.log('📊 Coluna title existe:', columnExists.length > 0);
-    
     // Busca usuário admin
     const users = await dataSource.query(`
       SELECT id, email, name, title, "isAdmin" 
@@ -32,16 +23,21 @@ async function checkAndUpdateAdmin() {
       console.log(`  - ${user.name} (${user.email}) - Título: ${user.title || 'NULL'}`);
     });
     
-    // Atualiza todos os admins sem título
-    if (columnExists.length > 0) {
+      // Novo título e imagem para o admin
+      const newTitle = 'Desenvolvedor Full Stack & Mestre de RPG';
+      const newProfilePhoto = 'https://i.imgur.com/zpTaeNW.png';
+      
       const result = await dataSource.query(`
         UPDATE users 
-        SET title = 'Desenvolvedor & Community Expert' 
-        WHERE "isAdmin" = true AND (title IS NULL OR title = '');
-      `);
+        SET 
+          title = $1,
+          "profilePhoto" = $2
+        WHERE "isAdmin" = true;
+      `, [newTitle, newProfilePhoto]);
       
       console.log('✅ Usuários atualizados:', result[1] || 0);
-    }
+      console.log(`📝 Novo título: ${newTitle}`);
+      console.log(`📷 Nova imagem: ${newProfilePhoto}`);
     
   } catch (error) {
     console.error('❌ Erro:', error.message);
