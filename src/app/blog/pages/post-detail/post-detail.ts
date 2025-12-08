@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { PostService, Post } from '../../services/post.services/post.services';
 import { Observable, BehaviorSubject, of, Subject } from 'rxjs';
 import { switchMap, catchError, finalize, shareReplay, startWith, take, tap } from 'rxjs/operators';
@@ -32,7 +33,7 @@ import { PostCounter } from '../../components/post-counter/post-counter';
 						<span *ngIf="post.author?.title" class="mx-2">•</span>
 						<span *ngIf="post.author?.title" class="italic">{{ post.author?.title }}</span>
 						<span class="mx-2">•</span>
-						<span>{{ post.createdAt }}</span>
+						<span>{{ formatDate(post.createdAt) }}</span>
 						<span class="mx-2">•</span>
 						<span>{{ '1 min' }}</span>
 					</div>
@@ -70,7 +71,12 @@ export class PostDetailComponent implements OnInit {
   error$ = new BehaviorSubject<string | null>(null);
   private reload$ = new Subject<void>();
 
-  constructor(private route: ActivatedRoute, private postService: PostService, private sanitizer: DomSanitizer) {}
+  constructor(
+    private route: ActivatedRoute, 
+    private postService: PostService, 
+    private sanitizer: DomSanitizer,
+    private titleService: Title
+  ) {}
 
   ngOnInit(): void {
     // Observa os parâmetros da rota e usa switchMap para buscar o post correspondente.
@@ -91,6 +97,11 @@ export class PostDetailComponent implements OnInit {
             this.loading$.next(true);
             this.error$.next(null);
             return this.postService.getPost(id).pipe(
+              tap((post) => {
+                if (post) {
+                  this.titleService.setTitle(`${post.title} | Forja dos Narradores`);
+                }
+              }),
               catchError((err) => {
                 console.error('Erro ao carregar post', err);
                 this.error$.next('Falha ao carregar o post');
@@ -110,6 +121,22 @@ export class PostDetailComponent implements OnInit {
       shareReplay(1),
     );
   }
+
+	formatDate(dateString?: string): string {
+		if (!dateString) return '';
+		
+		const date = new Date(dateString);
+		const months = [
+			'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+			'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+		];
+		
+		const day = date.getDate();
+		const month = months[date.getMonth()];
+		const year = date.getFullYear();
+		
+		return `${day} de ${month}, ${year}`;
+	}
 
   reload(): void {
     this.reload$.next();
