@@ -16,6 +16,15 @@ export interface User {
 }
 
 /**
+ * Category model - matches the Category entity from backend
+ */
+export interface Category {
+  id: number;
+  nome: string;
+  slug: string;
+}
+
+/**
  * Post model - matches the API response from NestJS backend
  */
 export interface Post {
@@ -26,7 +35,8 @@ export interface Post {
   author?: User;      // Relationship to User entity
   authorId?: string;  // Foreign key for creating/updating
   image?: string;
-  categories?: string[];  // Array of categories
+  categories?: Category[];  // Array of category objects
+  categoryIds?: number[];   // Array of category IDs for creating/updating
   tags?: string[];
   published: boolean;
   viewCount: number;
@@ -103,6 +113,14 @@ export class PostService {
    */
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>('http://localhost:3000/api/users');
+  }
+
+  /**
+   * Busca todas as categorias
+   * GET http://localhost:3000/api/categories
+   */
+  getAllCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>('http://localhost:3000/api/categories');
   }
 
   /**
