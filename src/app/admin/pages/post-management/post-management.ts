@@ -50,12 +50,26 @@ import { of } from 'rxjs';
           <tbody class="bg-white divide-y divide-gray-200">
             <tr *ngFor="let post of posts$ | async" class="hover:bg-gray-50">
               <td class="px-6 py-4">
-                <div class="text-sm font-medium text-gray-900">{{ post.title }}</div>
-                <div class="text-sm text-gray-500">{{ post.author?.name || 'Sem autor' }}</div>
+                <div class="flex items-center gap-3">
+                  <img 
+                    *ngIf="post.author?.profilePhoto; else avatarFallback"
+                    [src]="post.author?.profilePhoto" 
+                    [alt]="post.author?.name"
+                    class="w-10 h-10 rounded-full object-cover">
+                  <ng-template #avatarFallback>
+                    <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+                      {{ (post.author?.name || 'U').charAt(0).toUpperCase() }}
+                    </div>
+                  </ng-template>
+                  <div>
+                    <div class="text-sm font-medium text-gray-900">{{ post.title }}</div>
+                    <div class="text-sm text-gray-500">{{ post.author?.name || 'Sem autor' }}</div>
+                  </div>
+                </div>
               </td>
               <td class="px-6 py-4 text-sm text-gray-500">
                 <span *ngFor="let cat of post.categories; let last = last">
-                  {{ cat }}<span *ngIf="!last">, </span>
+                  {{ cat.nome }}<span *ngIf="!last">, </span>
                 </span>
                 <span *ngIf="!post.categories || post.categories.length === 0">Sem categoria</span>
               </td>
