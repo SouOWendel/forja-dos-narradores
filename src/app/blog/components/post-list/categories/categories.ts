@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PostService, Category } from '../../../services/post.services/post.services';
 
 @Component({
   selector: 'app-categories',
@@ -7,7 +8,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <div class="forja-categories mb-4">
-			<h2 class="text-3xl mb-2">Últimas Publicações</h2>
+			<h2 class="text-3xl mb-2">Explore por Categoria</h2>
 			<ul class="flex space-x-4 mt-6 gap-5 flex-wrap">
 				<li class="category-item">
 					<button 
@@ -19,10 +20,10 @@ import { CommonModule } from '@angular/common';
 				</li>
 				<li class="category-item" *ngFor="let cat of categories">
 					<button 
-						(click)="selectCategory(cat)" 
-						[class.active]="selectedCategory === cat"
+						(click)="selectCategory(cat.slug)" 
+						[class.active]="selectedCategory === cat.slug"
 						class="category-link">
-						{{ cat }}
+						{{ cat.nome }}
 					</button>
 				</li>
 			</ul>
@@ -52,24 +53,32 @@ import { CommonModule } from '@angular/common';
 		}
 	`
 })
-export class Categories {
-  // Lista de categorias disponíveis (deve corresponder às categorias do banco)
-  categories = [
-    'Teoria Narrativa',
-    'Worldbuilding',
-    'Técnica',
-    'Estrutura',
-    'Personagens'
-  ];
+export class Categories implements OnInit {
+  // Lista de categorias carregadas do banco de dados
+  categories: Category[] = [];
 
-  // Categoria atualmente selecionada (null = todas)
+  // Categoria atualmente selecionada (null = todas, string = slug da categoria)
   selectedCategory: string | null = null;
 
   // Evento que emite a categoria selecionada para o componente pai
   @Output() categorySelected = new EventEmitter<string | null>();
 
-  selectCategory(category: string | null): void {
-    this.selectedCategory = category;
-    this.categorySelected.emit(category);  // Emite evento para o pai
+  constructor(private postService: PostService) {}
+
+  ngOnInit(): void {
+    // Carrega categorias do banco de dados
+    this.postService.getAllCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+      },
+      error: (err) => {
+        console.error('Erro ao carregar categorias', err);
+      }
+    });
+  }
+
+  selectCategory(categorySlug: string | null): void {
+    this.selectedCategory = categorySlug;
+    this.categorySelected.emit(categorySlug);  // Emite slug para o pai
   }
 }
